@@ -3,11 +3,12 @@
 import { motion } from 'framer-motion';
 import { ArrowLeft, Code, Clock, Users, Star } from 'lucide-react';
 import Link from 'next/link';
+import { use } from 'react';
 
 interface TagPageProps {
-  params: {
+  params: Promise<{
     tag: string;
-  };
+  }>;
 }
 
 interface TagProblem {
@@ -102,7 +103,7 @@ const tagData: Record<string, { name: string; icon: string; color: string; probl
         title: 'Binary Tree Inorder Traversal',
         difficulty: 'Easy',
         difficultyColor: 'text-green-400',
-        description: 'Given the root of a binary tree, return the inorder traversal of its nodes\' values.',
+        description: 'Given the root of a binary tree, return the inorder traversal of its nodes&apos; values.',
         timeComplexity: 'O(n)',
         spaceComplexity: 'O(n)',
         likes: 750,
@@ -124,7 +125,7 @@ const tagData: Record<string, { name: string; icon: string; color: string; probl
 };
 
 export default function TagPage({ params }: TagPageProps) {
-  const tag = params.tag;
+  const { tag } = use(params);
   const data = tagData[tag];
 
   if (!data) {

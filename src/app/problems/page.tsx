@@ -73,11 +73,11 @@ export default function ProblemsPage() {
                   </div>
                   <div className="flex items-center gap-1">
                     <Star className="w-4 h-4" />
-                    <span>{problem.likes.toLocaleString()}</span>
+                    <span>{(problem.likes ?? 0).toLocaleString()}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <Users className="w-4 h-4" />
-                    <span>{problem.solved.toLocaleString()}</span>
+                    <span>{(problem.solved ?? 0).toLocaleString()}</span>
                   </div>
                 </div>
                 <Link href={`/problems/${problem.id}`} className="bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-2 rounded-lg hover:shadow-lg transition-all duration-300 hover:scale-105 inline-block">

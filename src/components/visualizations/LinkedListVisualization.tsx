@@ -102,7 +102,7 @@ export default function LinkedListVisualization({ list: initialList, algorithm }
       if (currentStepData.action === 'visit') {
         setVisited(prev => [...prev, currentStepData.current!]);
       }
-      if (currentStepData.result) {
+      if ('result' in currentStepData && currentStepData.result && Array.isArray(currentStepData.result)) {
         setResult(currentStepData.result);
       }
     }

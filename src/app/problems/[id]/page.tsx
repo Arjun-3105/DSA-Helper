@@ -3,20 +3,21 @@
 import { motion } from 'framer-motion';
 import { ArrowLeft, Code, Clock, Users, Star, Play } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, use } from 'react';
 import ArrayVisualization from '@/components/visualizations/ArrayVisualization';
 import TreeVisualization from '@/components/visualizations/TreeVisualization';
 import LinkedListVisualization from '@/components/visualizations/LinkedListVisualization';
 import { problemsById } from '@/data/problems';
 
 interface ProblemPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default function ProblemPage({ params }: ProblemPageProps) {
-  const problem = problemsById[params.id];
+  const { id } = use(params);
+  const problem = problemsById[id];
   const [activeTab, setActiveTab] = useState<'description' | 'visualization'>('description');
 
   if (!problem) {
@@ -76,11 +77,11 @@ export default function ProblemPage({ params }: ProblemPageProps) {
               </div>
               <div className="flex items-center gap-1">
                 <Star className="w-4 h-4" />
-                <span>{problem.likes.toLocaleString()}</span>
+                <span>{(problem.likes ?? 0).toLocaleString()}</span>
               </div>
               <div className="flex items-center gap-1">
                 <Users className="w-4 h-4" />
-                <span>{problem.solved.toLocaleString()}</span>
+                <span>{(problem.solved ?? 0).toLocaleString()}</span>
               </div>
             </div>
           </div>
@@ -127,6 +128,7 @@ export default function ProblemPage({ params }: ProblemPageProps) {
               </div>
 
               {/* Examples */}
+              {problem.examples && problem.examples.length > 0 && (
               <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
                 <h2 className="text-2xl font-bold mb-4">Examples</h2>
                 {problem.examples.map((example, index) => (
@@ -146,8 +148,10 @@ export default function ProblemPage({ params }: ProblemPageProps) {
                   </div>
                 ))}
               </div>
+              )}
 
               {/* Constraints */}
+              {problem.constraints && problem.constraints.length > 0 && (
               <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
                 <h2 className="text-2xl font-bold mb-4">Constraints</h2>
                 <ul className="space-y-2">
@@ -159,22 +163,23 @@ export default function ProblemPage({ params }: ProblemPageProps) {
                   ))}
                 </ul>
               </div>
+              )}
             </div>
           ) : (
             <div className="space-y-8">
-              {problem.type === 'array' && (
+              {problem.type === 'array' && 'array' in problem.visualizationData && (
                 <ArrayVisualization
                   array={problem.visualizationData.array}
                   algorithm={problem.visualizationData.algorithm}
                 />
               )}
-              {problem.type === 'tree' && (
+              {problem.type === 'tree' && 'tree' in problem.visualizationData && (
                 <TreeVisualization
                   tree={problem.visualizationData.tree}
                   algorithm={problem.visualizationData.algorithm}
                 />
               )}
-              {problem.type === 'linked-list' && (
+              {problem.type === 'linked-list' && 'list' in problem.visualizationData && (
                 <LinkedListVisualization
                   list={problem.visualizationData.list}
                   algorithm={problem.visualizationData.algorithm}

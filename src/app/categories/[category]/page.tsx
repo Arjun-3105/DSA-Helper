@@ -3,16 +3,18 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowLeft, Clock, Code, Star, Users } from 'lucide-react';
+import { use } from 'react';
 import { getCategoryMetaBySlug } from '@/data/categories';
 import { allProblems } from '@/data/problems';
 
 interface CategoryPageProps {
-  params: { category: string };
+  params: Promise<{ category: string }>;
 }
 
 export default function CategoryPage({ params }: CategoryPageProps) {
-  const categoryMeta = getCategoryMetaBySlug(params.category);
-  const problems = allProblems.filter((p) => p.category === params.category);
+  const { category } = use(params);
+  const categoryMeta = getCategoryMetaBySlug(category);
+  const problems = allProblems.filter((p) => p.category === category);
 
   if (!categoryMeta) {
     return (
