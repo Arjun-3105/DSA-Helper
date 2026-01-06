@@ -167,20 +167,6 @@ If you introduce a brand-new visualization type beyond `array`, `tree`, or `link
 - Use Tailwind classes for component styling
 - Add custom animations in the CSS file
 
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
 ## License
 
 This project is open source and available under the [MIT License](LICENSE).
-
-## Acknowledgments
-
-- Inspired by LeetCode's problem structure
-- Built with modern web technologies
-- Designed for educational purposes
