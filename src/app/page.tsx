@@ -3,15 +3,10 @@
 import { motion } from 'framer-motion';
 import { Code, Zap, Brain, Target, ArrowRight, Github, Star } from 'lucide-react';
 import Link from 'next/link';
+import { categoriesMeta } from '@/data/categories';
+import { allProblems } from '@/data/problems';
 
-const tags = [
-  { name: 'Arrays', icon: '📊', color: 'from-blue-500 to-cyan-500', count: 12 },
-  { name: 'Linked Lists', icon: '🔗', color: 'from-purple-500 to-pink-500', count: 8 },
-  { name: 'Trees', icon: '🌳', color: 'from-green-500 to-emerald-500', count: 15 },
-  { name: 'Graphs', icon: '🕸️', color: 'from-orange-500 to-red-500', count: 10 },
-  { name: 'Dynamic Programming', icon: '⚡', color: 'from-yellow-500 to-orange-500', count: 20 },
-  { name: 'Sorting', icon: '🔄', color: 'from-indigo-500 to-purple-500', count: 7 },
-];
+// Home page uses categories list for the Explore by Category section
 
 const features = [
   {
@@ -173,27 +168,30 @@ export default function Home() {
           </motion.div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {tags.map((tag, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.05 }}
-                className="group cursor-pointer"
-              >
-                <Link href={`/tags/${tag.name.toLowerCase().replace(' ', '-')}`}>
-                  <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-all duration-300">
-                    <div className="text-4xl mb-3">{tag.icon}</div>
-                    <h3 className="text-lg font-semibold mb-2">{tag.name}</h3>
-                    <div className={`inline-block px-3 py-1 rounded-full text-sm font-medium bg-gradient-to-r ${tag.color} text-white`}>
-                      {tag.count} problems
+            {categoriesMeta.map((cat, index) => {
+              const count = allProblems.filter((p) => p.category === cat.slug).length;
+              return (
+                <motion.div
+                  key={cat.slug}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.05 }}
+                  className="group cursor-pointer"
+                >
+                  <Link href={`/categories/${cat.slug}`}>
+                    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-all duration-300">
+                      <div className="text-4xl mb-3">{cat.icon}</div>
+                      <h3 className="text-lg font-semibold mb-2">{cat.name}</h3>
+                      <div className={`inline-block px-3 py-1 rounded-full text-sm font-medium bg-gradient-to-r ${cat.color} text-white`}>
+                        {count} questions
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
+                  </Link>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>

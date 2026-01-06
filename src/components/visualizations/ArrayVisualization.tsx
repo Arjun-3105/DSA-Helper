@@ -9,6 +9,12 @@ interface ArrayVisualizationProps {
   algorithm: 'two-sum' | 'max-subarray' | 'binary-search';
 }
 
+type Step = {
+  description: string;
+  highlighted: number[];
+  comparing: number[];
+};
+
 export default function ArrayVisualization({ array: initialArray, algorithm }: ArrayVisualizationProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -231,20 +237,20 @@ export default function ArrayVisualization({ array: initialArray, algorithm }: A
   );
 }
 
-function generateSteps(array: number[], algorithm: string, target: number) {
+function generateSteps(array: number[], algorithm: 'two-sum' | 'max-subarray' | 'binary-search', target: number): Step[] {
   switch (algorithm) {
     case 'two-sum':
       return generateTwoSumSteps(array, target);
     case 'max-subarray':
       return generateMaxSubarraySteps(array);
     default:
-      return [];
+      return [] as Step[];
   }
 }
 
-function generateTwoSumSteps(array: number[], target: number) {
-  const steps = [];
-  const map = new Map();
+function generateTwoSumSteps(array: number[], target: number): Step[] {
+  const steps: Step[] = [];
+  const map = new Map<number, number>();
   
   steps.push({
     description: 'Initialize hash map to store value-index pairs',
@@ -262,9 +268,10 @@ function generateTwoSumSteps(array: number[], target: number) {
     });
 
     if (map.has(complement)) {
+      const j = map.get(complement)!;
       steps.push({
-        description: `Found pair! Return indices [${map.get(complement)}, ${i}]`,
-        highlighted: [i, map.get(complement)],
+        description: `Found pair! Return indices [${j}, ${i}]`,
+        highlighted: [i, j],
         comparing: []
       });
       break;
@@ -282,8 +289,8 @@ function generateTwoSumSteps(array: number[], target: number) {
   return steps;
 }
 
-function generateMaxSubarraySteps(array: number[]) {
-  const steps = [];
+function generateMaxSubarraySteps(array: number[]): Step[] {
+  const steps: Step[] = [];
   let maxSum = array[0];
   let currentSum = array[0];
   let start = 0;

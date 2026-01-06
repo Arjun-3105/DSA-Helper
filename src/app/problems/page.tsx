@@ -3,81 +3,7 @@
 import { motion } from 'framer-motion';
 import { ArrowLeft, Code, Clock, Users, Star } from 'lucide-react';
 import Link from 'next/link';
-
-const problems = [
-  {
-    id: 1,
-    title: 'Two Sum',
-    difficulty: 'Easy',
-    difficultyColor: 'text-green-400',
-    tags: ['Array', 'Hash Table'],
-    description: 'Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.',
-    timeComplexity: 'O(n)',
-    spaceComplexity: 'O(n)',
-    likes: 1250,
-    solved: 850000
-  },
-  {
-    id: 2,
-    title: 'Add Two Numbers',
-    difficulty: 'Medium',
-    difficultyColor: 'text-yellow-400',
-    tags: ['Linked List', 'Math'],
-    description: 'You are given two non-empty linked lists representing two non-negative integers. Add the two numbers and return the sum as a linked list.',
-    timeComplexity: 'O(max(m,n))',
-    spaceComplexity: 'O(max(m,n))',
-    likes: 890,
-    solved: 450000
-  },
-  {
-    id: 3,
-    title: 'Longest Substring Without Repeating Characters',
-    difficulty: 'Medium',
-    difficultyColor: 'text-yellow-400',
-    tags: ['Hash Table', 'String', 'Sliding Window'],
-    description: 'Given a string s, find the length of the longest substring without repeating characters.',
-    timeComplexity: 'O(n)',
-    spaceComplexity: 'O(min(m,n))',
-    likes: 2100,
-    solved: 320000
-  },
-  {
-    id: 4,
-    title: 'Binary Tree Inorder Traversal',
-    difficulty: 'Easy',
-    difficultyColor: 'text-green-400',
-    tags: ['Stack', 'Tree', 'Depth-First Search'],
-    description: 'Given the root of a binary tree, return the inorder traversal of its nodes\' values.',
-    timeComplexity: 'O(n)',
-    spaceComplexity: 'O(n)',
-    likes: 750,
-    solved: 680000
-  },
-  {
-    id: 5,
-    title: 'Maximum Subarray',
-    difficulty: 'Easy',
-    difficultyColor: 'text-green-400',
-    tags: ['Array', 'Divide and Conquer', 'Dynamic Programming'],
-    description: 'Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.',
-    timeComplexity: 'O(n)',
-    spaceComplexity: 'O(1)',
-    likes: 1800,
-    solved: 520000
-  },
-  {
-    id: 6,
-    title: 'Climbing Stairs',
-    difficulty: 'Easy',
-    difficultyColor: 'text-green-400',
-    tags: ['Math', 'Dynamic Programming', 'Memoization'],
-    description: 'You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?',
-    timeComplexity: 'O(n)',
-    spaceComplexity: 'O(1)',
-    likes: 950,
-    solved: 410000
-  }
-];
+import { allProblems } from '@/data/problems';
 
 export default function ProblemsPage() {
   return (
@@ -104,7 +30,7 @@ export default function ProblemsPage() {
 
         {/* Problems Grid */}
         <div className="grid gap-6">
-          {problems.map((problem, index) => (
+          {allProblems.map((problem, index) => (
             <motion.div
               key={problem.id}
               initial={{ opacity: 0, y: 20 }}
