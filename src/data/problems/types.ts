@@ -6,6 +6,22 @@ export type ArrayAlgo = 'two-sum';
 export type TreeAlgo = 'inorder';
 export type LinkedListAlgo = 'add-two-numbers';
 
+export type VisualizationData = 
+  | { array: number[]; algorithm: ArrayAlgo }
+  | { tree: TreeNodeLike; algorithm: TreeAlgo }
+  | { list: ListNodeLike; algorithm: LinkedListAlgo };
+
+export interface TreeNodeLike {
+  value: number;
+  left?: TreeNodeLike;
+  right?: TreeNodeLike;
+}
+
+export interface ListNodeLike {
+  value: number;
+  next?: ListNodeLike;
+}
+
 export type Problem = {
   id: string; // string for URL param compatibility
   title: string;
@@ -21,6 +37,6 @@ export type Problem = {
   likes?: number;
   solved?: number;
   type: VisualizationType;
-  visualizationData: any;
+  visualizationData: VisualizationData;
 };
 

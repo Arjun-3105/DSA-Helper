@@ -170,7 +170,7 @@ export default function TreeVisualization({ tree: initialTree, algorithm }: Tree
             <h4 className="font-semibold mb-3">Customize Tree</h4>
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">
-                Tree (level-order, comma-separated, use 'null' for empty nodes)
+                Tree (level-order, comma-separated, use &apos;null&apos; for empty nodes)
               </label>
               <input
                 type="text"
@@ -324,8 +324,6 @@ function TreeNodeComponent({
 }
 
 function generateTraversalSteps(tree: TreeNode, algorithm: string) {
-  const steps = [];
-  
   switch (algorithm) {
     case 'inorder':
       return generateInorderSteps(tree);
