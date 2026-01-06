@@ -10,7 +10,19 @@ interface TagPageProps {
   };
 }
 
-const tagData: Record<string, { name: string; icon: string; color: string; problems: any[] }> = {
+interface TagProblem {
+  id: number;
+  title: string;
+  difficulty: string;
+  difficultyColor: string;
+  description: string;
+  timeComplexity: string;
+  spaceComplexity: string;
+  likes: number;
+  solved: number;
+}
+
+const tagData: Record<string, { name: string; icon: string; color: string; problems: TagProblem[] }> = {
   'arrays': {
     name: 'Arrays',
     icon: '📊',

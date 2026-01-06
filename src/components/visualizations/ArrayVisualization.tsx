@@ -18,7 +18,6 @@ type Step = {
 export default function ArrayVisualization({ array: initialArray, algorithm }: ArrayVisualizationProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [highlightedIndices, setHighlightedIndices] = useState<number[]>([]);
   const [target, setTarget] = useState<number>(9);
   const [array, setArray] = useState<number[]>(initialArray || [2, 7, 11, 15]);
   const [result, setResult] = useState<number[]>([]);
@@ -50,7 +49,6 @@ export default function ArrayVisualization({ array: initialArray, algorithm }: A
   const handleReset = () => {
     setCurrentStep(0);
     setIsPlaying(false);
-    setHighlightedIndices([]);
     setResult([]);
   };
 
@@ -70,7 +68,6 @@ export default function ArrayVisualization({ array: initialArray, algorithm }: A
         setTarget(newTarget);
         setCurrentStep(0);
         setIsPlaying(false);
-        setHighlightedIndices([]);
         setResult([]);
         setShowInput(false);
       }
@@ -293,8 +290,6 @@ function generateMaxSubarraySteps(array: number[]): Step[] {
   const steps: Step[] = [];
   let maxSum = array[0];
   let currentSum = array[0];
-  let start = 0;
-  let end = 0;
 
   steps.push({
     description: 'Initialize maxSum and currentSum with first element',
@@ -311,7 +306,6 @@ function generateMaxSubarraySteps(array: number[]): Step[] {
 
     if (currentSum < 0) {
       currentSum = array[i];
-      start = i;
       steps.push({
         description: `Reset currentSum to array[${i}], new start at index ${i}`,
         highlighted: [i],
@@ -328,7 +322,6 @@ function generateMaxSubarraySteps(array: number[]): Step[] {
 
     if (currentSum > maxSum) {
       maxSum = currentSum;
-      end = i;
       steps.push({
         description: `Update maxSum to ${maxSum}, end at index ${i}`,
         highlighted: [i],
